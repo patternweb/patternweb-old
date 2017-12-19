@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 
 import Code from "./views/code";
 import Graph from "./views/graph";
+import Debug from "./views/debug";
 
 interface IState {
   code: string;
