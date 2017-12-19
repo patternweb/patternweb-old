@@ -57,6 +57,7 @@ export default class Parser {
   private serializeSymbol(symbol: ts.Symbol): DocEntry {
     return {
       name: symbol.getName(),
+      docs: ts.displayPartsToString(symbol.getDocumentationComment()),
       type: this.checker.typeToString(
         this.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!)
       )

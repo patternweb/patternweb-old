@@ -1,8 +1,13 @@
 import Parser from ".";
 
 const code = `
-function add(a:number,b=1) { return a+b }
 function greet(name,greeting='hello') { return [greeting, " ", name].join(" ") }
+/**
+* adds two numbers
+* @param a first number
+* @param b last number
+*/
+function add(a:number,b=1) { return a+b }
 `;
 
 it("can parse code", () => {
@@ -11,14 +16,17 @@ it("can parse code", () => {
     add: {
       name: "add",
       type: "(a: number, b?: number) => number",
+      docs: "adds two numbers",
       inputs: [
         {
           name: "a",
-          type: "number"
+          type: "number",
+          docs: "first number"
         },
         {
           name: "b",
-          type: "number"
+          type: "number",
+          docs: "last number"
         }
       ],
       outputs: [
@@ -31,14 +39,17 @@ it("can parse code", () => {
     greet: {
       name: "greet",
       type: "(name: any, greeting?: string) => any",
+      docs: "",
       inputs: [
         {
           name: "name",
-          type: "any"
+          type: "any",
+          docs: ""
         },
         {
           name: "greeting",
-          type: "string"
+          type: "string",
+          docs: ""
         }
       ],
       outputs: [

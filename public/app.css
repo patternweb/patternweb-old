@@ -5,6 +5,8 @@
 }
 body {
   background: #000;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
 }
 main#container {
   width: 100%;
@@ -25,8 +27,6 @@ main#container {
   background: #444;
   padding: 10px;
   color: #fff;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
-    monospace;
   white-space: pre;
   word-wrap: normal;
   font-size: 13px;
@@ -44,6 +44,7 @@ g.node rect {
 g.node text {
   fill: #fff;
   text-anchor: middle;
+  font-size: 12px;
 }
 g.outports text {
   text-anchor: end;

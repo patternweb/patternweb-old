@@ -13,7 +13,12 @@ interface IState {
 
 class App extends React.Component<{}, IState> {
   state = {
-    code: `function(a:number,b:number=1):number {
+    code: `/**
+* adds two numbers
+* @param a first number
+* @param b last number
+*/
+function add(a:number,b:number=1):number {
   return a+b
 }`
   };
