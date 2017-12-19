@@ -19,10 +19,6 @@ module.exports = {
     inline: false,
     host: "0.0.0.0"
   },
-  node: {
-    process: false,
-    Buffer: false
-  },
   module: {
     rules: [
       {
