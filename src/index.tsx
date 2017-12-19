@@ -5,6 +5,8 @@ import Code from "./views/code";
 import Graph from "./views/graph";
 import Debug from "./views/debug";
 
+import Parser from "./lib/parser";
+
 interface IState {
   code: string;
 }
@@ -18,6 +20,7 @@ class App extends React.Component<{}, IState> {
 
   handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const code = e.target.value;
+    console.log(new Parser({ "foo.ts": code }).parse());
     this.setState((prevState: IState) => {
       prevState.code = code;
       return prevState;
