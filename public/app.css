@@ -20,6 +20,15 @@ main#container {
   width: 100%;
   max-width: 500px;
   background: #444;
+  padding: 10px;
+  color: #fff;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    monospace;
+  white-space: pre;
+  word-wrap: normal;
+  font-size: 13px;
+  outline: none;
+  border: none;
 }
 #graph {
   flex: 1;
