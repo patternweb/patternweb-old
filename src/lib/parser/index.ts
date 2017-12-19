@@ -8,53 +8,48 @@ interface DocEntry {
   args?: DocEntry[];
 }
 
-export function parseCode(
-  code,
-  options: ts.CompilerOptions = {
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.CommonJS
-  }
-): any {
-  const host = new PatternCompilerHost();
-  host.addFile("foo.ts", code);
-  const program = ts.createProgram(
-    ["foo.ts"],
-    host.getCompilationSettings(),
-    host
-  );
-  const checker = program.getTypeChecker();
-  const output = {};
+export default class Parser {
+  private program;
+  private checker;
+  private output = {};
 
-  function serializeFunction(symbol: ts.Symbol): DocEntry {
+  constructor(private files = {}, private host = new PatternCompilerHost()) {
+    const filenames = Object.keys(files);
+    filenames.forEach(filename => {
+      this.host.addFile(filename, files[filename]);
+    });
+    this.program = ts.createProgram(
+      filenames,
+      host.getCompilationSettings(),
+      host
+    );
+    this.checker = this.program.getTypeChecker();
+  }
+
+  parse() {
+    for (const sourceFile of this.program.getSourceFiles()) {
+      // if (!sourceFile.isDeclarationFile) {
+      ts.forEachChild(sourceFile, this.visit.bind(this));
+      // }
+    }
+    return this.output;
+  }
+
+  private visit(node: ts.Node): void {
+    if (ts.isFunctionDeclaration(node) && node.name) {
+      const symbol = this.checker.getSymbolAtLocation(node.name);
+      if (symbol) {
+        const fn = this.serializeFunction(symbol);
+        this.output[fn.name] = fn;
+      }
+    }
+  }
+
+  private serializeFunction(symbol: ts.Symbol): DocEntry {
     return {
       name: symbol.getName()
     };
   }
-
-  function visit(node: ts.Node): void {
-    // console.log(ts.SyntaxKind[node.kind]);
-    if (ts.isFunctionDeclaration(node) && node.name) {
-      const symbol = checker.getSymbolAtLocation(node.name);
-      if (symbol) {
-        const fn = serializeFunction(symbol);
-        output[fn.name] = serializeFunction(symbol);
-      }
-    }
-  }
-
-  for (const sourceFile of program.getSourceFiles()) {
-    // if (!sourceFile.isDeclarationFile) {
-    ts.forEachChild(sourceFile, visit);
-    // }
-  }
-
-  console.log(output);
-
-  return {
-    components: {
-      add: {
-        inputs: ["a", "number"]
-      }
-    }
-  };
 }
+
+new Parser(new PatternCompilerHost());
