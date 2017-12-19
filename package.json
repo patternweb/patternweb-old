@@ -1,0 +1,86 @@
+{
+  "name": "patternweb",
+  "version": "0.0.1",
+  "author": "John Rees <john@bitsushi.com>",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "test": "jest",
+    "lint": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css}\"",
+    "build": "cp -R public dist && PRODUCTION=true webpack -p",
+    "deploy": "npm run build && ghpages -p dist && rm -rf dist"
+  },
+  "keywords": [],
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "@types/enzyme": "^3.1.5",
+    "@types/jest": "^21.1.8",
+    "@types/lodash": "^4.14.88",
+    "@types/mathjs": "^0.0.35",
+    "@types/node": "^8.0.58",
+    "@types/react": "^16.0.29",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-redux": "^5.0.14",
+    "@types/redux": "^3.6.0",
+    "@types/three": "^0.84.35",
+    "@types/uuid": "^3.4.3",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "copy-webpack-plugin": "^4.2.3",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "ghpages": "^0.0.10",
+    "jest": "^21.2.1",
+    "prettier": "^1.9.2",
+    "ts-jest": "^21.2.4",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "dependencies": {
+    "@babel/traverse": "^7.0.0-beta.34",
+    "babel-traverse": "^6.26.0",
+    "babel-types": "^6.26.0",
+    "babylon": "^7.0.0-beta.34",
+    "browserfs": "^1.4.3",
+    "clipper-js": "^1.0.2",
+    "dagre-layout": "^0.8.0",
+    "fast-deep-equal": "^1.0.0",
+    "github-api": "^3.0.0",
+    "lodash": "^4.17.4",
+    "mathjs": "^3.17.0",
+    "micro-signals": "^1.1.1",
+    "monaco-editor": "^0.10.1",
+    "ntypescript": "^1.201706190042.1",
+    "patternweb": "^0.0.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-monaco-editor": "^0.13.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "rxjs": "^5.5.5",
+    "snabbdom": "^0.7.0",
+    "snabbdom-to-html": "^5.0.0",
+    "svg-pan-zoom": "^3.5.3",
+    "three": "^0.88.0",
+    "ts-simple-ast": "^3.2.0",
+    "uuid": "^3.1.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/support/tests/jest_shim.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/support/tests/enzyme_setup.js",
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  }
+}
