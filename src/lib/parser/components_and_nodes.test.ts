@@ -29,16 +29,16 @@ it("can parse code", () => {
       sub: {
         name: "sub",
         docs: "",
-        type: "(a: any, b: any) => number",
+        type: "(x: any, y: any) => number",
         inputs: [
           {
             docs: "",
-            name: "a",
+            name: "x",
             type: "any"
           },
           {
             docs: "",
-            name: "b",
+            name: "y",
             type: "any"
           }
         ],
@@ -55,11 +55,11 @@ it("can parse code", () => {
         name: "second",
         component: "add",
         inputs: [5, "__$$first"]
+      },
+      {
+        component: "sub",
+        inputs: ["__$$first", "__$$second"]
       }
-      // {
-      //   component: "sub",
-      //   inputs: ["__$$first", "__$$second"]
-      // }
     ]
   };
   expect(subject).toEqual(result);

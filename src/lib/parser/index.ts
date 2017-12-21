@@ -48,12 +48,14 @@ export default class Parser {
   }
 
   private visit(node: ts.Node): void {
+    const ob = {};
     if (ts.isVariableStatement(node)) {
-      const ob = {};
       this.serializeVariable(ob)(node);
       this.output.nodes.push(ob);
-    }
-    if (ts.isFunctionDeclaration(node) && node.name) {
+    } else if (ts.isExpressionStatement(node)) {
+      this.serializeExpression(ob)(node);
+      this.output.nodes.push(ob);
+    } else if (ts.isFunctionDeclaration(node) && node.name) {
       const symbol = this.checker.getSymbolAtLocation(node.name);
       if (symbol) {
         const fn = this.serializeFunction(symbol);
@@ -62,27 +64,34 @@ export default class Parser {
     }
   }
 
+  private serializeExpression = ob => (node: ts.Node) => {
+    if (ts.isCallExpression(node)) this.serializeCallExpression(ob)(node);
+    ts.forEachChild(node, this.serializeVariable(ob));
+  };
+
   private serializeVariable = ob => (node: ts.Node) => {
     if (ts.isVariableDeclaration(node) && node.name) {
       // get node name
       const symbol = this.checker.getSymbolAtLocation(node.name);
       ob.name = symbol.getName();
     }
-    if (ts.isCallExpression(node)) {
-      // get component name
-      ob.component = node.expression.getText();
-      ob.inputs = node.arguments.map(arg => {
-        switch (ts.SyntaxKind[arg.kind]) {
-          case "FirstLiteralToken":
-            return parseFloat(arg.getText());
-          case "Identifier":
-            return "__$$" + arg.getText();
-          default:
-            return arg.getText();
-        }
-      });
-    }
+    if (ts.isCallExpression(node)) this.serializeCallExpression(ob)(node);
     ts.forEachChild(node, this.serializeVariable(ob));
+  };
+
+  private serializeCallExpression = ob => (node: ts.CallExpression) => {
+    // get component name
+    ob.component = node.expression.getText();
+    ob.inputs = node.arguments.map(arg => {
+      switch (ts.SyntaxKind[arg.kind]) {
+        case "FirstLiteralToken":
+          return parseFloat(arg.getText());
+        case "Identifier":
+          return "__$$" + arg.getText();
+        default:
+          return arg.getText();
+      }
+    });
   };
 
   private serializeSymbol(symbol: ts.Symbol): DocEntry {
