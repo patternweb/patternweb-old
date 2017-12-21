@@ -21,5 +21,5 @@ it("can parse code", () => {
       outputs: []
     }
   };
-  expect(subject).toEqual(result);
+  expect(subject.components).toEqual(result);
 });

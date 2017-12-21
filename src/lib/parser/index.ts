@@ -13,7 +13,10 @@ interface DocEntry {
 export default class Parser {
   private program;
   private checker;
-  private output = {};
+  private output = {
+    components: {},
+    nodes: []
+  };
 
   constructor(private files = {}, private host = new PatternCompilerHost()) {
     const filenames = Object.keys(files);
@@ -32,6 +35,7 @@ export default class Parser {
     this.serializeSymbol = this.serializeSymbol.bind(this);
     this.serializeSignature = this.serializeSignature.bind(this);
     this.serializeFunction = this.serializeFunction.bind(this);
+    // this.serializeVariable = this.serializeVariable.bind(this);
   }
 
   parse() {
@@ -44,14 +48,42 @@ export default class Parser {
   }
 
   private visit(node: ts.Node): void {
+    if (ts.isVariableStatement(node)) {
+      const ob = {};
+      this.serializeVariable(ob)(node);
+      this.output.nodes.push(ob);
+    }
     if (ts.isFunctionDeclaration(node) && node.name) {
       const symbol = this.checker.getSymbolAtLocation(node.name);
       if (symbol) {
         const fn = this.serializeFunction(symbol);
-        this.output[fn.name] = fn;
+        this.output.components[fn.name] = fn;
       }
     }
   }
+
+  private serializeVariable = ob => (node: ts.Node) => {
+    if (ts.isVariableDeclaration(node) && node.name) {
+      // get node name
+      const symbol = this.checker.getSymbolAtLocation(node.name);
+      ob.name = symbol.getName();
+    }
+    if (ts.isCallExpression(node)) {
+      // get component name
+      ob.component = node.expression.getText();
+      ob.inputs = node.arguments.map(arg => {
+        switch (ts.SyntaxKind[arg.kind]) {
+          case "FirstLiteralToken":
+            return parseFloat(arg.getText());
+          case "Identifier":
+            return "__$$" + arg.getText();
+          default:
+            return arg.getText();
+        }
+      });
+    }
+    ts.forEachChild(node, this.serializeVariable(ob));
+  };
 
   private serializeSymbol(symbol: ts.Symbol): DocEntry {
     return {

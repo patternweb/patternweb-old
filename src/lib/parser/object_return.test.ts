@@ -32,5 +32,5 @@ it("can parse code", () => {
       ]
     }
   };
-  expect(subject).toEqual(result);
+  expect(subject.components).toEqual(result);
 });
