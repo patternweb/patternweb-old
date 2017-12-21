@@ -21,7 +21,7 @@ class App extends React.Component<{}, IState> {
 * @param b last number
 */
 function add(a:number,b:number=1):number {
-  return a+b
+  return {x:1,y:2}
 }`
   };
 
@@ -36,13 +36,6 @@ function add(a:number,b:number=1):number {
 
   render() {
     const { code, components } = this.state;
-    // const components = [
-    //   {
-    //     name: "test",
-    //     inputs: [{ name: "a" }, { name: "b" }],
-    //     outputs: [{ name: "test" }]
-    //   }
-    // ];
     return (
       <div id="ui">
         <Code code={code} handleCodeChange={this.handleChange.bind(this)} />

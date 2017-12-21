@@ -35,6 +35,7 @@ export default function Node({ x, y, component }) {
   const height =
     (Math.max(component.inputs.length, component.outputs.length) + 2) *
     PORT_HEIGHT;
+
   return (
     <g className="node" transform={`translate(${x}, ${y})`}>
       <rect
