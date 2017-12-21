@@ -1,16 +1,10 @@
 import Parser from ".";
-
-const code = `
-function greet(name,greeting='hello') { return [greeting, " ", name].join(" ") }
-/**
-* adds two numbers
-* @param a first number
-* @param b last number
-*/
-function add(a:number,b=1) { return a+b }
-`;
+import { readFileSync } from "fs";
 
 it("can parse code", () => {
+  const code = readFileSync(
+    "support/tests/fixtures/parser/basic.ts"
+  ).toString();
   const subject = new Parser({ "foo.ts": code }).parse();
   const result = {
     add: {
@@ -31,7 +25,6 @@ it("can parse code", () => {
       ],
       outputs: [
         {
-          name: undefined,
           type: "number"
         }
       ]
@@ -54,8 +47,7 @@ it("can parse code", () => {
       ],
       outputs: [
         {
-          name: undefined,
-          type: "any"
+          type: "unknown"
         }
       ]
     }

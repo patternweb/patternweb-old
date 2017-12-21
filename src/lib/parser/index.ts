@@ -65,14 +65,22 @@ export default class Parser {
   }
 
   private serializeSignature(signature: ts.Signature) {
+    // check if object
+    let outputs = signature
+      .getReturnType()
+      .getProperties()
+      .map(this.serializeSymbol);
+
+    if (outputs.length === 0) {
+      const type = (signature.getReturnType() as any).intrinsicName;
+      if (type !== "void") {
+        outputs.push({ type });
+      }
+    }
+
     return {
       inputs: signature.parameters.map(this.serializeSymbol),
-      outputs: [
-        {
-          name: undefined,
-          type: this.checker.typeToString(signature.getReturnType())
-        }
-      ]
+      outputs
     };
   }
 
