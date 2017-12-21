@@ -5,6 +5,9 @@
 }
 body {
   background: #000;
+}
+body,
+textarea {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
     monospace;
 }
@@ -45,6 +48,9 @@ g.node text {
   fill: #fff;
   text-anchor: middle;
   font-size: 12px;
+}
+g.inports text {
+  text-anchor: start;
 }
 g.outports text {
   text-anchor: end;

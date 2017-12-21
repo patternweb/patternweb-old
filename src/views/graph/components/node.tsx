@@ -48,7 +48,11 @@ export default function Node({ x, y, component }) {
       </text>
       <g className="inports" transform={`translate(0, ${PORT_HEIGHT * 2})`}>
         {component.inputs.map((arg, i) => (
-          <InPort key={arg.name} name={arg.name} i={i} />
+          <InPort
+            key={[component.name, arg.name].join("<")}
+            name={arg.name}
+            i={i}
+          />
         ))}
       </g>
       <g
@@ -56,7 +60,11 @@ export default function Node({ x, y, component }) {
         transform={`translate(${width}, ${PORT_HEIGHT * 2})`}
       >
         {component.outputs.map((arg, i) => (
-          <OutPort key={arg.name} name={arg.name} i={i} />
+          <OutPort
+            key={[component.name, arg.name].join(">")}
+            name={arg.name}
+            i={i}
+          />
         ))}
       </g>
     </g>

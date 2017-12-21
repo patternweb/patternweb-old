@@ -9,10 +9,12 @@ import Parser from "./lib/parser";
 
 interface IState {
   code: string;
+  components: any;
 }
 
 class App extends React.Component<{}, IState> {
   state = {
+    components: {},
     code: `/**
 * adds two numbers
 * @param a first number
@@ -25,19 +27,26 @@ function add(a:number,b:number=1):number {
 
   handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const code = e.target.value;
-    console.log(new Parser({ "foo.ts": code }).parse());
     this.setState((prevState: IState) => {
       prevState.code = code;
+      prevState.components = new Parser({ "foo.ts": code }).parse();
       return prevState;
     });
   }
 
   render() {
-    const { code } = this.state;
+    const { code, components } = this.state;
+    // const components = [
+    //   {
+    //     name: "test",
+    //     inputs: [{ name: "a" }, { name: "b" }],
+    //     outputs: [{ name: "test" }]
+    //   }
+    // ];
     return (
       <div id="ui">
         <Code code={code} handleCodeChange={this.handleChange.bind(this)} />
-        <Graph />
+        <Graph components={components} />
       </div>
     );
   }

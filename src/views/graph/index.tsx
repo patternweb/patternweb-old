@@ -1,18 +1,16 @@
 import * as React from "react";
 import Node from "./components/node";
 
-export default function Graph() {
-  const components = [
-    {
-      name: "test",
-      inputs: [{ name: "a" }, { name: "b" }],
-      outputs: [{ name: "test" }]
-    }
-  ];
+export default function Graph({ components }) {
   return (
     <svg id="graph">
-      {components.map(component => (
-        <Node key={component.name} x={100} y={100} component={component} />
+      {Object.keys(components).map((component, i) => (
+        <Node
+          key={components[component].name}
+          x={50 + 200 * i}
+          y={100}
+          component={components[component]}
+        />
       ))}
     </svg>
   );
