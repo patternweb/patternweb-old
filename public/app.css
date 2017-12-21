@@ -55,3 +55,19 @@ g.inports text {
 g.outports text {
   text-anchor: end;
 }
+
+g.inports circle,
+g.outports circle {
+  fill: #999;
+}
+g.number circle {
+  fill: red;
+}
+g.string circle {
+  fill: yellow;
+}
+path.edge {
+  stroke: yellow;
+  stroke-width: 2px;
+  fill: none;
+}

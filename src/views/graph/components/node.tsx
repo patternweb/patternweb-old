@@ -4,9 +4,13 @@ const PORT_HEIGHT = 24;
 const CONNECTOR_RADIUS = 8;
 const NODE_PADDING = 7;
 
-function InPort({ i, name }) {
+function InPort({ i, name, id, type }) {
   return (
-    <g transform={`translate(0, ${i * PORT_HEIGHT})`}>
+    <g
+      transform={`translate(0, ${i * PORT_HEIGHT})`}
+      onMouseOver={() => console.log(id)}
+      className={type}
+    >
       <circle
         cx={-CONNECTOR_RADIUS}
         cy={-CONNECTOR_RADIUS / 2}
@@ -17,9 +21,13 @@ function InPort({ i, name }) {
   );
 }
 
-function OutPort({ i, name = "" }) {
+function OutPort({ i, name = "", id, type }) {
   return (
-    <g transform={`translate(0, ${i * PORT_HEIGHT})`}>
+    <g
+      transform={`translate(0, ${i * PORT_HEIGHT})`}
+      onMouseOver={() => console.log(id)}
+      className={type}
+    >
       <circle
         cx={CONNECTOR_RADIUS}
         cy={-CONNECTOR_RADIUS / 2}
@@ -48,25 +56,23 @@ export default function Node({ x, y, component }) {
         {component.name}
       </text>
       <g className="inports" transform={`translate(0, ${PORT_HEIGHT * 2})`}>
-        {component.inputs.map((arg, i) => (
-          <InPort
-            key={[component.name, arg.name].join("<")}
-            name={arg.name}
-            i={i}
-          />
-        ))}
+        {component.inputs.map((arg, i) => {
+          const id = [component.name, arg.name].join("<");
+          return (
+            <InPort key={id} id={id} name={arg.name} i={i} type={arg.type} />
+          );
+        })}
       </g>
       <g
         className="outports"
         transform={`translate(${width}, ${PORT_HEIGHT * 2})`}
       >
-        {component.outputs.map((arg, i) => (
-          <OutPort
-            key={[component.name, arg.name].join(">")}
-            name={arg.name}
-            i={i}
-          />
-        ))}
+        {component.outputs.map((arg, i) => {
+          const id = [component.name, arg.name].join(">");
+          return (
+            <OutPort key={id} id={id} name={arg.name} i={i} type={arg.type} />
+          );
+        })}
       </g>
     </g>
   );
