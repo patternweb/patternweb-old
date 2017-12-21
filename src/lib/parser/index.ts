@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import * as fs from "fs";
 import { PatternCompilerHost } from "./hosts";
 
 interface DocEntry {
