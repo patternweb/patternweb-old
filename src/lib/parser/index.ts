@@ -83,13 +83,14 @@ export default class Parser {
     // get component name
     ob.component = node.expression.getText();
     ob.inputs = node.arguments.map(arg => {
+      // console.log(arg)
       switch (ts.SyntaxKind[arg.kind]) {
         case "FirstLiteralToken":
           return parseFloat(arg.getText());
         case "Identifier":
           return "__$$" + arg.getText();
         default:
-          return arg.getText();
+          return (arg as any).text;
       }
     });
   };
