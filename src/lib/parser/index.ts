@@ -11,6 +11,7 @@ interface DocEntry {
   inputs?: DocEntry[];
   outputs?: DocEntry[];
   defaultValue?: any;
+  thing?: "function" | "asyncFunction";
 }
 
 export default class Parser {
@@ -60,8 +61,15 @@ export default class Parser {
       this.output.nodes.push(ob);
     } else if (ts.isFunctionDeclaration(node) && node.name) {
       const symbol = this.checker.getSymbolAtLocation(node.name);
+
+      // check if async
+      let isAsync = false;
+      if (node.modifiers) {
+        isAsync = node.modifiers.some(m => m.kind === 120);
+      }
+
       if (symbol) {
-        const fn = this.serializeFunction(symbol);
+        const fn = this.serializeFunction(symbol, isAsync);
         this.output.components[fn.name] = fn;
       }
     }
@@ -106,6 +114,7 @@ export default class Parser {
 
   private serializeSymbol(symbol: ts.Symbol): DocEntry {
     const value = (symbol.valueDeclaration as any).initializer;
+
     const ob: DocEntry = {
       name: symbol.getName(),
       docs: ts.displayPartsToString(symbol.getDocumentationComment()),
@@ -140,7 +149,7 @@ export default class Parser {
     };
   }
 
-  private serializeFunction(symbol: ts.Symbol): DocEntry {
+  private serializeFunction(symbol: ts.Symbol, async): DocEntry {
     const details = this.serializeSymbol(symbol);
     const constructorType = this.checker.getTypeOfSymbolAtLocation(
       symbol,
@@ -148,6 +157,7 @@ export default class Parser {
     );
     return {
       ...details,
+      thing: async ? "asyncFunction" : "function",
       ...constructorType.getCallSignatures().map(this.serializeSignature)[0]
     };
   }

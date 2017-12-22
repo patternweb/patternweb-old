@@ -11,6 +11,7 @@ it("can parse code", () => {
       add: {
         name: "add",
         docs: "",
+        thing: "function",
         type: "(a: any, b: any) => any",
         inputs: [
           {
@@ -29,6 +30,7 @@ it("can parse code", () => {
       sub: {
         name: "sub",
         docs: "",
+        thing: "function",
         type: "(x: any, y: any) => number",
         inputs: [
           {

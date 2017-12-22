@@ -10,6 +10,7 @@ it("can parse code", () => {
     components: {
       distance: {
         name: "distance",
+        thing: "function",
         docs: "",
         type: "(origin: string, target?: string) => number",
         inputs: [
@@ -29,6 +30,7 @@ it("can parse code", () => {
       },
       milesTo: {
         name: "milesTo",
+        thing: "function",
         docs: "",
         type: "(miles: number) => { km: number; m: number; }",
         inputs: [
@@ -45,6 +47,7 @@ it("can parse code", () => {
       },
       log: {
         name: "log",
+        thing: "function",
         docs: "",
         type: "(toLog: any, unit: any) => void",
         inputs: [

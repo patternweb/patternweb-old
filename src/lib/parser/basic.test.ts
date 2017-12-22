@@ -9,6 +9,7 @@ it("can parse code", () => {
   const result = {
     add: {
       name: "add",
+      thing: "function",
       type: "(a: number, b?: number) => number",
       docs: "adds two numbers",
       inputs: [
@@ -32,6 +33,7 @@ it("can parse code", () => {
     },
     greet: {
       name: "greet",
+      thing: "function",
       type: "(name: any, greeting?: string) => any",
       docs: "",
       inputs: [

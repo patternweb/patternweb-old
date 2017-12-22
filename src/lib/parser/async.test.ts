@@ -10,7 +10,7 @@ it("can parse code", () => {
   const result = {
     components: {
       add1: {
-        // thing: 'asyncFunction',
+        thing: "asyncFunction",
         name: "add1",
         type: "(x: any) => any",
         docs: "",
@@ -28,7 +28,7 @@ it("can parse code", () => {
         ]
       },
       resolveAfter2Seconds: {
-        // thing: 'function',
+        thing: "function",
         name: "resolveAfter2Seconds",
         type: "(x: any) => any",
         docs: "",

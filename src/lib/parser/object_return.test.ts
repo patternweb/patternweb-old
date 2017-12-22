@@ -9,6 +9,7 @@ it("can parse code", () => {
   const result = {
     mmTo: {
       docs: "converts millimeters to different units",
+      thing: "function",
       name: "mmTo",
       type: "(mm?: number) => { cm: number; inches: number; }",
       inputs: [

@@ -10,6 +10,7 @@ it("can parse code", () => {
     log: {
       docs: "logs a value",
       name: "log",
+      thing: "function",
       type: "(toLog: any) => void",
       inputs: [
         {
