@@ -71,3 +71,10 @@ path.edge {
   stroke-width: 2px;
   fill: none;
 }
+.tool-tip {
+  fill: orange;
+}
+g.inports text.default {
+  text-anchor: end;
+  font-style: italic;
+}

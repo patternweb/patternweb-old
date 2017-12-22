@@ -4,7 +4,7 @@ const PORT_HEIGHT = 24;
 const CONNECTOR_RADIUS = 8;
 const NODE_PADDING = 7;
 
-function InPort({ i, name, id, type }) {
+function InPort({ i, name, id, type, defaultValue }) {
   return (
     <g
       transform={`translate(0, ${i * PORT_HEIGHT})`}
@@ -16,6 +16,9 @@ function InPort({ i, name, id, type }) {
         cy={-CONNECTOR_RADIUS / 2}
         r={CONNECTOR_RADIUS}
       />
+      <text className="default" x={-18}>
+        {defaultValue}
+      </text>
       <text>{name}</text>
     </g>
   );
@@ -56,14 +59,26 @@ export default function Node({ x, y, component }) {
         width={width + NODE_PADDING * 2}
         height={height}
       />
-      <text className="node-name" x={width / 2} y={PORT_HEIGHT}>
+      <text
+        className="node-name"
+        x={width / 2}
+        y={PORT_HEIGHT}
+        onMouseOver={() => console.log(component.docs)}
+      >
         {component.name}
       </text>
       <g className="inports" transform={`translate(0, ${PORT_HEIGHT * 2})`}>
         {(component.inputs || []).map((arg, i) => {
           const id = [component.name, arg.name].join("<");
           return (
-            <InPort key={id} id={id} name={arg.name} i={i} type={arg.type} />
+            <InPort
+              key={id}
+              id={id}
+              name={arg.name}
+              i={i}
+              type={arg.type}
+              defaultValue={arg.defaultValue}
+            />
           );
         })}
       </g>

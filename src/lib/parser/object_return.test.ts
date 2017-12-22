@@ -13,6 +13,7 @@ it("can parse code", () => {
       type: "(mm?: number) => { cm: number; inches: number; }",
       inputs: [
         {
+          defaultValue: 0,
           name: "mm",
           docs: "millimeters",
           type: "number"

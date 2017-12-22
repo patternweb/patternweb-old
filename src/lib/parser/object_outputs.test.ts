@@ -19,6 +19,7 @@ it("can parse code", () => {
             type: "string"
           },
           {
+            defaultValue: "LGW",
             docs: "",
             name: "target",
             type: "string"

@@ -42,7 +42,7 @@ function add(a:number,b:number=1) {
     return (
       <div id="ui">
         <Code code={code} handleCodeChange={this.handleChange.bind(this)} />
-        <Graph components={components.components} />
+        <Graph data={components} />
       </div>
     );
   }

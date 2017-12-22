@@ -20,7 +20,8 @@ it("can parse code", () => {
         {
           name: "b",
           type: "number",
-          docs: "last number"
+          docs: "last number",
+          defaultValue: 1
         }
       ],
       outputs: [
@@ -42,7 +43,8 @@ it("can parse code", () => {
         {
           name: "greeting",
           type: "string",
-          docs: ""
+          docs: "",
+          defaultValue: "hello"
         }
       ],
       outputs: [

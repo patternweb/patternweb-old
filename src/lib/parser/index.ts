@@ -10,6 +10,7 @@ interface DocEntry {
   type?: string;
   inputs?: DocEntry[];
   outputs?: DocEntry[];
+  defaultValue?: any;
 }
 
 export default class Parser {
@@ -85,28 +86,38 @@ export default class Parser {
     // get component name
     ob.name = [ALIAS_PREFIX, node.pos].join("");
     ob.component = node.expression.getText();
-    ob.inputs = node.arguments.map(arg => {
-      // console.log(arg.pos, arg.end)
-
-      switch (ts.SyntaxKind[arg.kind]) {
-        case "FirstLiteralToken":
-          return parseFloat(arg.getText());
-        case "Identifier":
-          return [ALIAS_PREFIX, arg.getText()].join("");
-        default:
-          return (arg as any).text;
-      }
-    });
+    ob.inputs = node.arguments.map(arg => this.parseValue(arg));
   };
 
+  private parseValue(arg, includeAliases = true) {
+    switch (ts.SyntaxKind[arg.kind]) {
+      case "FirstLiteralToken":
+        return parseFloat(arg.getText());
+      case "Identifier":
+        if (includeAliases) {
+          return [ALIAS_PREFIX, arg.getText()].join("");
+        } else {
+          return undefined;
+        }
+      default:
+        return (arg as any).text;
+    }
+  }
+
   private serializeSymbol(symbol: ts.Symbol): DocEntry {
-    return {
+    const value = (symbol.valueDeclaration as any).initializer;
+    const ob: DocEntry = {
       name: symbol.getName(),
       docs: ts.displayPartsToString(symbol.getDocumentationComment()),
       type: this.checker.typeToString(
         this.checker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration!)
       )
     };
+    if (value) {
+      const v = this.parseValue(value, false);
+      if (v !== undefined) ob.defaultValue = this.parseValue(value, false);
+    }
+    return ob;
   }
 
   private serializeSignature(signature: ts.Signature) {
