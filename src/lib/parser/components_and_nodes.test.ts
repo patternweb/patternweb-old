@@ -47,18 +47,19 @@ it("can parse code", () => {
     },
     nodes: [
       {
-        name: "first",
+        name: "$$82",
         component: "add",
         inputs: [10, 20]
       },
       {
-        name: "second",
+        name: "$$108",
         component: "add",
-        inputs: [5, "__$$first"]
+        inputs: [5, "$$first"]
       },
       {
+        name: "$$122",
         component: "sub",
-        inputs: ["__$$first", "__$$second"]
+        inputs: ["$$first", "$$second"]
       }
     ]
   };

@@ -1,6 +1,8 @@
 import * as ts from "typescript";
 import { PatternCompilerHost } from "./hosts";
 
+const ALIAS_PREFIX = "$$";
+
 interface DocEntry {
   name?: string;
   docs?: string;
@@ -81,14 +83,16 @@ export default class Parser {
 
   private serializeCallExpression = ob => (node: ts.CallExpression) => {
     // get component name
+    ob.name = [ALIAS_PREFIX, node.pos].join("");
     ob.component = node.expression.getText();
     ob.inputs = node.arguments.map(arg => {
-      // console.log(arg)
+      // console.log(arg.pos, arg.end)
+
       switch (ts.SyntaxKind[arg.kind]) {
         case "FirstLiteralToken":
           return parseFloat(arg.getText());
         case "Identifier":
-          return "__$$" + arg.getText();
+          return [ALIAS_PREFIX, arg.getText()].join("");
         default:
           return (arg as any).text;
       }

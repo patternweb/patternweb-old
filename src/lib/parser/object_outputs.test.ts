@@ -63,17 +63,21 @@ it("can parse code", () => {
     },
     nodes: [
       {
+        name: "$$233",
         component: "distance",
         inputs: ["MAN"]
       },
       {
-        name: "milesTo"
+        name: "milesTo",
+        inputs: ["$$233"]
       },
       {
+        name: "log",
         component: "log",
-        inputs: ["__$$first", "km"]
+        inputs: ["$$milesTo", "km"]
       }
     ]
   };
+  // console.log(JSON.stringify(subject, null, 2))
   expect(subject).toEqual(result);
 });
