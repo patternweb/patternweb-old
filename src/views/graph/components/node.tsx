@@ -41,7 +41,11 @@ function OutPort({ i, name = "", id, type }) {
 export default function Node({ x, y, component }) {
   const width = 100;
   const height =
-    (Math.max(component.inputs.length, component.outputs.length) + 2) *
+    (Math.max(
+      (component.inputs || []).length,
+      (component.outputs || []).length
+    ) +
+      2) *
     PORT_HEIGHT;
 
   return (
@@ -56,7 +60,7 @@ export default function Node({ x, y, component }) {
         {component.name}
       </text>
       <g className="inports" transform={`translate(0, ${PORT_HEIGHT * 2})`}>
-        {component.inputs.map((arg, i) => {
+        {(component.inputs || []).map((arg, i) => {
           const id = [component.name, arg.name].join("<");
           return (
             <InPort key={id} id={id} name={arg.name} i={i} type={arg.type} />
@@ -67,7 +71,7 @@ export default function Node({ x, y, component }) {
         className="outports"
         transform={`translate(${width}, ${PORT_HEIGHT * 2})`}
       >
-        {component.outputs.map((arg, i) => {
+        {(component.outputs || []).map((arg, i) => {
           const id = [component.name, arg.name].join(">");
           return (
             <OutPort key={id} id={id} name={arg.name} i={i} type={arg.type} />

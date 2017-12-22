@@ -14,13 +14,16 @@ interface IState {
 
 class App extends React.Component<{}, IState> {
   state = {
-    components: {},
+    components: {
+      components: {},
+      nodes: []
+    },
     code: `/**
 * adds two numbers
 * @param a first number
 * @param b last number
 */
-function add(a:number,b:number=1):number {
+function add(a:number,b:number=1) {
   return {x:1,y:2}
 }`
   };
@@ -39,7 +42,7 @@ function add(a:number,b:number=1):number {
     return (
       <div id="ui">
         <Code code={code} handleCodeChange={this.handleChange.bind(this)} />
-        <Graph components={components} />
+        <Graph components={components.components} />
       </div>
     );
   }

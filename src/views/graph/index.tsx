@@ -3,6 +3,8 @@ import Node from "./components/node";
 import Edge from "./components/edge";
 
 export default function Graph({ components }) {
+  console.clear();
+  console.log(JSON.stringify(components, null, 2));
   return (
     <svg id="graph">
       {Object.keys(components).map((component, i) => (

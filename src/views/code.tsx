@@ -1,5 +1,10 @@
 import * as React from "react";
 
+function handleSelect(e: React.SyntheticEvent<HTMLTextAreaElement>) {
+  const { selectionStart, selectionEnd } = e.target as HTMLTextAreaElement;
+  console.log({ selectionStart, selectionEnd });
+}
+
 export default function Code({ code, handleCodeChange }) {
   return (
     <textarea
@@ -8,6 +13,7 @@ export default function Code({ code, handleCodeChange }) {
       autoCorrect="off"
       spellCheck={false}
       onChange={handleCodeChange}
+      onSelect={handleSelect}
       value={code}
     />
   );
