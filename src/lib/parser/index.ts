@@ -103,7 +103,9 @@ export default class Parser {
         return parseFloat(arg.getText());
       case "Identifier":
         if (includeAliases) {
-          return [ALIAS_PREFIX, arg.getText()].join("");
+          console.log(arg);
+          // return [ALIAS_PREFIX, arg.getText()].join("");
+          return [ALIAS_PREFIX, arg.flowNode.node.pos].join("");
         } else {
           return undefined;
         }

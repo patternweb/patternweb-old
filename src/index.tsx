@@ -24,8 +24,10 @@ class App extends React.Component<{}, IState> {
 * @param b last number
 */
 function add(a:number,b:number=1) {
-  return {x:1,y:2}
-}`
+  return a+b
+}
+const a = add(4)
+add(a,2)`
   };
 
   handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {

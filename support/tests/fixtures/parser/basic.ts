@@ -10,3 +10,6 @@ function greet(name,greeting='hello') {
 function add(a:number,b=1) {
   return a+b
 }
+
+const a = add(1,1)
+add(a,3)

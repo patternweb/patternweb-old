@@ -41,7 +41,7 @@ function OutPort({ i, name = "", id, type }) {
   );
 }
 
-export default function Node({ x, y, component }) {
+export default function Node({ x, y, component, inputs = [] }) {
   const width = 100;
   const height =
     (Math.max(
@@ -77,7 +77,7 @@ export default function Node({ x, y, component }) {
               name={arg.name}
               i={i}
               type={arg.type}
-              defaultValue={arg.defaultValue}
+              defaultValue={inputs[i] || arg.defaultValue}
             />
           );
         })}
