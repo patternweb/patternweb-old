@@ -5,7 +5,7 @@ import Code from "./views/code";
 import Graph from "./views/graph";
 import Debug from "./views/debug";
 
-import Parser from "./lib/parser";
+import PatternMaker from "patternmaker";
 
 interface IState {
   code: string;
@@ -34,7 +34,7 @@ add(a,2)`
     const code = e.target.value;
     this.setState((prevState: IState) => {
       prevState.code = code;
-      prevState.components = new Parser({ "foo.ts": code }).parse();
+      prevState.components = new PatternMaker({ "foo.ts": code }).parse();
       return prevState;
     });
   }

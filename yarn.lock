@@ -3756,6 +3756,12 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
+patternmaker@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/patternmaker/-/patternmaker-0.0.3.tgz#189eee9f08964ecb816d48232cdb1c469796502c"
+  dependencies:
+    typescript "^2.6.2"
+
 pbkdf2@^3.0.3:
   version "3.0.14"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.14.tgz#a35e13c64799b06ce15320f459c230e68e73bade"
